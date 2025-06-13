@@ -4,11 +4,14 @@ import java.util.Scanner;
 
 
 import sessions.Session;
+import view.ContactView;
 import view.UserView;
 
 public class Entry {
 	
 	private static final UserView userView= new UserView();
+	private static final ContactView contactView = new  ContactView();
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Operate();
@@ -35,19 +38,23 @@ public class Entry {
 			 {
 				 
 				System.out.println("Login To Your acc");
-				if(userView.Login(userInput)) {
-					System.out.println("1.Save 2.Delete 3.Update 4.List");
+				userView.Login(userInput);
+				operations : while(Session.isUserIn) {
+					System.out.println("1.Save 2.Delete 3.Update 4.List 5.Close App");
 					int choice = userInput.nextInt();
 					
 					switch (choice) {
-					case 1 -> {}
-					
+					case 1 -> contactView.save(userInput);
+					case 2-> contactView.Delete(userInput);
+					case 3-> contactView.update(userInput);
 					
 					
 					default ->
 					throw new IllegalArgumentException("Unexpected value: " + choice);
 					}
+					
 				}
+				
 			
 				
 			}
@@ -64,8 +71,6 @@ public class Entry {
 		}
 	}
 	
-	static public Boolean userMiddleware() {
-		return Session.isUserIn;
-	}
+	
 
 }
