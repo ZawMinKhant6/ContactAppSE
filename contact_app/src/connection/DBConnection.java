@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class DBConnection {
 	
-	public Connection getConnection() {
+	static public Connection getConnection() {
 			String dbPath = "jdbc:mysql://localhost:3306/contactdb?useSSL=false";
 			String user = "root";
 			String password ="1234";
@@ -14,8 +14,10 @@ public class DBConnection {
 					
 					try {
 						con = DriverManager.getConnection(dbPath, user, password);
+						System.out.println("Connected successfully");
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
+						System.out.println("Connection Error");
 						e.printStackTrace();
 					}
 					
