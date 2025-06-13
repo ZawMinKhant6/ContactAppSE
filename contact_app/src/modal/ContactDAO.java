@@ -5,9 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import connection.DBConnection;
-import sessions.Session;
 
 public class ContactDAO {
 	
@@ -15,6 +16,18 @@ public class ContactDAO {
 	private PreparedStatement pStmt;
 	private ResultSet rs;
 	private Connection connection;
+	
+	private void closeConnection() {
+		if(connection != null) {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+	}
 	
 	public Boolean saveContact(Contact contact) {
 		Boolean isSave=false;
@@ -101,5 +114,33 @@ public class ContactDAO {
 			e.printStackTrace();
 		}
 		return isUpdated;
+	}
+	
+	public List<Contact> getAllContact(){
+		List<Contact> contactList = new ArrayList<Contact>();
+		connection = DBConnection.getConnection();
+		try {
+			stmt = connection.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM contact");
+			
+			while(rs.next()) {
+				contactList.add(new Contact(
+					
+					rs.getString("name"),
+					rs.getString("phone_number"),
+					rs.getString("sec_number"),
+					rs.getLong("id")
+					));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			closeConnection();
+		}
+		return contactList;
+		
 	}
 }

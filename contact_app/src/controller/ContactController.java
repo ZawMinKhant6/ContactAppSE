@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.List;
+
 import modal.Contact;
 import modal.ContactDAO;
 
@@ -22,4 +24,9 @@ public class ContactController {
 	public Boolean update(Contact contact) {
 		return contactDAO.updateContact(contact);
 	}
+	
+	public List<Contact> getAllContact() {
+		  List<Contact> movieList=contactDAO.getAllContact();
+		  return movieList;
+		}
 }

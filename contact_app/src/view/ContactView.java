@@ -1,5 +1,6 @@
 package view;
 
+import java.util.List;
 import java.util.Scanner;
 
 import controller.ContactController;
@@ -27,15 +28,46 @@ public class ContactView {
 		
 	}
 	
+	public void listContact(List<Contact> contactList) {
+		
+		
+		if(!contactList.isEmpty()) {
+			System.out.println("All Contact Data : " );
+			System.out.println();
+			
+			for(final Contact contact:contactList) {
+				
+				showContact(contact);
+				System.out.println();
+			
+			}
+			
+			
+		
+		}
+		else {
+			System.out.println("No Contacts is found");
+		}
+	}
+	
+	public void showContactByNames(Scanner userInput ) {
+		System.out.println("Enter you search Name : ");
+		userInput.nextLine();
+		String charSeq= userInput.nextLine();
+		List<Contact> contactList = contactController.getAllContact().stream().
+				filter( (c) -> c.getName().toLowerCase().contains(charSeq)).toList();
+		listContact(contactList);
+	}
+	
 	public void showContact(Contact oldContact) {
-		Boolean yes=false;
+		
 		if(oldContact != null) {
 			
 			System.out.println(" Old name = "+ oldContact.getName());
 			System.out.println(" Old number = "+ oldContact.getPhoneNumber());
 			System.out.println(" Old sec Number = "+ oldContact.getSecNumber());
 			
-			yes=true;
+			
 			
 		}
 		else {
@@ -92,6 +124,23 @@ public class ContactView {
     
 		
     }
+    
+    public void contactList() {
+		List<Contact> contactList = contactController.getAllContact();
+		
+		if(!contactList.isEmpty()) {
+			System.out.println("All Movie Data : ");
+			System.out.println();
+			contactList.forEach((n) -> {;
+				System.out.println("### Contact Id ### - " + n.getId());
+				System.out.println("### Contact Name ### - " + n.getName());
+				System.out.println("### Contact First Number ### - " + n.getPhoneNumber());
+				System.out.println("### Contact Sec Number ### - " + n.getSecNumber());
+				System.out.println();
+				
+			});
+		}
+	}
 	
 	public void Delete(Scanner userInput) {
 		System.out.println("Enter contact Id to delete the contact");
